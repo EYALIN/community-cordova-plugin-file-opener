@@ -47,6 +47,24 @@ $ cordova plugin add community-cordova-plugin-file-opener  --variable ANDROID_SU
 
 If you are using the `cordova-android-support-gradle-release` plugin it should match the value you have set there.
 
+## Android Permissions
+
+This plugin only declares `READ_EXTERNAL_STORAGE` (with `maxSdkVersion="32"`) for legacy Android support.
+
+If your app needs to access media files on Android 13+, you must declare the required permissions in your app's `config.xml`:
+
+```xml
+<platform name="android">
+    <config-file target="AndroidManifest.xml" parent="/*" xmlns:android="http://schemas.android.com/apk/res/android">
+        <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+        <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+        <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    </config-file>
+</platform>
+```
+
+Only add the permissions your app actually needs. Google Play will reject apps that declare media permissions without a core need for persistent media access.
+
 ## Requirements
 
 The following platforms and versions are supported by the latest release:
